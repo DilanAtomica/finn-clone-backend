@@ -1,18 +1,44 @@
 import {Request, Response} from "express";
-import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 const express = require("express");
 const router = express.Router();
 const {db} = require("../utils/DBconnect");
-const {auth} = require("../firebase");
+const verifyToken = require("../utils/auth");
 
-router.post("/login", async(req: Request, res: Response) => {
+router.post("/register", async(req: Request, res: Response) => {
     try {
-        await createUserWithEmailAndPassword(auth, "dilan@hotmail.com", "123asd123asD");
-        res.status(200).json({message: "Logged in Successfully!"});
+
     } catch (error) {
         res.status(400).json({error: error});
     }
+});
 
+router.post("/login", async(req: Request, res: Response) => {
+    try {
+        const {email, password} = req.body.inputData
+
+        res.status(200).json({message: "Logged in Successfully!"});
+
+    } catch (error) {
+        res.status(400).json({error: error});
+    }
+});
+
+router.post("/logout", async(req: Request, res: Response) => {
+    try {
+
+        res.status(200).json({message: "Logged out successfully!"});
+    } catch (error) {
+        res.status(400).json({error: error});
+    }
+});
+
+router.get("/test", verifyToken, async(req: Request, res: Response) => {
+    try {
+        console.log("LOL")
+        res.status(200).json({message: "Yes, you are authenticated!"});
+    } catch (error) {
+        res.status(400).json({error: error});
+    }
 });
 
 
