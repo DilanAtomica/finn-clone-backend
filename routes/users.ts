@@ -6,8 +6,13 @@ const verifyToken = require("../utils/auth");
 
 router.post("/register", async(req: Request, res: Response) => {
     try {
+        console.log(req.body);
+        const {userID, username, email} = req.body.registerData;
+        const sqlInsert = await db.query("INSERT INTO user (userID, username, email) VALUES (?, ?, ?)", [userID, username, email]);
+        res.status(200).json({message: "Registered Successfully!"});
 
     } catch (error) {
+        console.log(error);
         res.status(400).json({error: error});
     }
 });

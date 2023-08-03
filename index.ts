@@ -25,6 +25,6 @@ const userRouter = require("./routes/users");
 
 app.use("/users", userRouter);
 
-app.listen(3002, () => {
-    console.log("Server running on port 3002");
+app.listen(3001, () => {
+    console.log("Server running on port 3001");
 });
